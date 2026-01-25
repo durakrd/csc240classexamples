@@ -13,8 +13,7 @@ int main(void) {
   if ((k < 1) || (k > 10)) {
       k = 1;
   }
-  for (ii=0;ii<k;ii++){
-    
+  for (ii=0;ii<k;ii++) {
       printf ("Hi, %s\n", name);
   }
   return 0;
