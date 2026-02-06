@@ -2,6 +2,7 @@
 *.swqp
 *~
 *.bak
+*#
 
 # Prerequisites
 *.d
