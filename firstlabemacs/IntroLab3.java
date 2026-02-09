@@ -62,5 +62,4 @@ public class IntroLab3 {
 		allChange(15);
 		allChange(75);
 	}
-
 }
