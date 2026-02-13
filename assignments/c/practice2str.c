@@ -16,7 +16,7 @@ int main(void) {
  
    /* Questions c & d*/
    s = str1;
-   while (*s != '\0') {
+   while (*s != 0) {
       printf("c&d) s=%p  *s=%c\n", s, *s);
       s++;
    }

@@ -3,22 +3,35 @@
 #include<string.h>
 
 /* Rewrite using a pointer to char str[] */
-void array_to_ptr () {
-  int n=0, len; 
+void array_to_ptr() {
+  int len = 1;
   char str[ ] = "Hello World!";
-  len = strlen(str);
-  for( n=0; n<len; n++) {
-    putc(str[n], stdout);
+  char *s = str;
+  while (*s != '\0') {
+    putc(*s, stdout);
+    s++;
+    len++;
   }
-  printf("\nlength = %d\n", n);
+  printf("\nlength = %d\n", len);
 }
 
 int contains (char * str, char c) {
-  /* To be completed as part of assignment */
+  while (*str != '\0') {
+    if (*str == c) {
+      return 1;
+    }
+    str++;
+  }
+  return 0;
 }
 
 int * makearray(int n) {
-  /* To be completed as part of assignment */
+  int *dynPtr = (int *)calloc(n, sizeof(int));
+  for (int ii = 1; ii <= n; ii++) {
+    *dynPtr = ii;
+    dynPtr++;
+  }
+  return dynPtr-n;
 }
 
 int main (void) {
