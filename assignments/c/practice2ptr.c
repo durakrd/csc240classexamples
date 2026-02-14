@@ -27,11 +27,13 @@ int contains (char * str, char c) {
 
 int * makearray(int n) {
   int *dynPtr = (int *)calloc(n, sizeof(int));
+  int *rtnPtr = dynPtr;
   for (int ii = 1; ii <= n; ii++) {
     *dynPtr = ii;
     dynPtr++;
   }
-  return dynPtr-n;
+  printf("\nUsing two pointers\n");
+  return rtnPtr;
 }
 
 int main (void) {
