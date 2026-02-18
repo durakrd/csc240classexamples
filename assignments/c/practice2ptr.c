@@ -3,7 +3,7 @@
 #include<string.h>
 
 /* Rewrite using a pointer to char str[] */
-void array_to_ptr() {
+void array_to_ptr(void) {
   int len = 1;
   char str[ ] = "Hello World!";
   char *s = str;
