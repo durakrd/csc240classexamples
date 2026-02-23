@@ -8,9 +8,11 @@ char *term_to_string(const term_t *term) {
 
   if (term->exponent == 0) {
     sprintf(rtnPtr, "%d", term->coefficient);
-  } else if (term->coefficient == 0) {
+  }
+  else if (term->coefficient == 0) {
     sprintf(rtnPtr, "%d", 0);
-  } else {
+  }
+  else {
     sprintf(rtnPtr, "%d%c^%d", term->coefficient, term->var, term->exponent);
   }
   return rtnPtr;
