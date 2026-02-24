@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-poly_t *new_polynomial() {
+poly_t * new_polynomial() {
   poly_t *rtnPoly = (poly_t *)malloc(sizeof(poly_t));
   rtnPoly->trmLsPtr = NULL;
   return rtnPoly;
@@ -28,7 +28,7 @@ void print_polynomial(const poly_t *poly) {
 }
 
 void add_to_polynomial(poly_t *poly, const term_t *term) {
-
+  /* Initializes poly_t struct if first term */
   if (poly->trmLsPtr == NULL) {
     poly->degree = term->exponent;
     /* Only accepts one main variable for entire polynomial */
@@ -44,24 +44,36 @@ void add_to_polynomial(poly_t *poly, const term_t *term) {
 
 poly_t *combine_like_terms(const poly_t *poly) {
 
-  poly_t *rtnPoly = new_polynomial();
-
-  /* Initializes array of zeros for coefficient totals*/
+  /*
+   Initializes array of terms with zeros for coefficients
+   with index equal to exponent
+  */
   int maxDeg = poly->degree;
-  int *coefArr = malloc((maxDeg+1) * sizeof(int));
+  term_t *termArr = malloc((maxDeg + 1) * sizeof(term_t));
   for (int p = 0; p <= maxDeg; p++) {
-    *(coefArr + p) = 0;
+    (termArr + p)->coefficient = 0;
+    (termArr + p)->var = poly->mainVar;
+    (termArr + p)->exponent = p;
   }
 
   node_t *termLs = poly->trmLsPtr;
   term_t *currTerm;
   while (termLs != NULL) {
     currTerm = (term_t *)termLs->data;
-    /* Add coefficient to exponent array */
+    /* Add coefficient to term array */
+    (termArr + currTerm->exponent)->coefficient += currTerm->coefficient;
     termLs = termLs->next;
   }
 
+  poly_t *rtnPoly = new_polynomial();
+  for (int jj = 0; jj <= maxDeg; jj++) {
+    if ((termArr+jj)->coefficient != 0) {
+      add_to_polynomial(rtnPoly,(termArr+jj));
+    }
+  }
   return rtnPoly;
 }
 
-void delete_polynomial(poly_t **poly) { free(*poly); }
+void delete_polynomial(poly_t **poly) {
+  free(*poly);
+}

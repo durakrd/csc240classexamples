@@ -7,7 +7,7 @@
 typedef struct {
   node_t *trmLsPtr;
   int degree;
-  /* assumes only one variable for entire polynomial*/
+  /* assumes only one variable for entire polynomial */
   char mainVar;
 } poly_t;
 
