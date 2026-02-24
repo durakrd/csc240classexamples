@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-poly_t * new_polynomial() {
+poly_t * new_polynomial(void) {
   poly_t *rtnPoly = (poly_t *)malloc(sizeof(poly_t));
   rtnPoly->trmLsPtr = NULL;
   return rtnPoly;
