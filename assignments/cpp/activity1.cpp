@@ -1,17 +1,20 @@
-#include<iostream>
+ #include <iostream>
 
 using namespace std;
 
 class MyClass {
-   private:
-       int num;
-   public:
-     MyClass(int x=0) {
-       num = x;
-     }
-     int doubleNum(); // Returns num times 2
-     void print();  // Prints num
-}; 
+private:
+  int num;
+
+public:
+  MyClass(int x = 0) { num = x; }
+  int doubleNum(); // Returns num times 2
+  void print();    // Prints num
+};
+
+int MyClass::doubleNum() { return num * 2; }
+
+void MyClass::print() { cout << "num = " << to_string(num) << endl; }
 
 int main() {
   MyClass x(10);
