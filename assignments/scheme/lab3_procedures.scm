@@ -87,22 +87,25 @@
 (define position-helper
   (lambda (ls cnt)
     (if (null? ls) '()
-     (cons (* cnt (car ls)) (position-helper (cdr ls) (+ cnt 1))))))
+        (cons (* cnt (car ls)) (position-helper (cdr ls) (+ cnt 1))))))
 
 (mult-position '(1 2 3 4 5))
 (mult-position '(1 1 1 1 1))
 (mult-position '(5 4 3 2 1))
 
-(define A 4.0)
-(define B 3.0)
-(define C 2.0)
-(define D 1.0)
-(define F 0.0)
-
 (define gpa
   (lambda (lst)
-    (apply + lst)))
-        
+    (/ (apply + (map grder lst)) (length lst))))
+
+(define grder
+  (lambda (grd)
+    (cond
+      ((equal? grd 'A) 4.0)
+      ((equal? grd 'B) 3.0)
+      ((equal? grd 'C) 2.0)
+      ((equal? grd 'D) 1.0)
+      (else 0.0))))
+
 (gpa '(A B A A A))
 (gpa '(A C D F B C A B))
 
@@ -115,7 +118,7 @@
 ;; (sum-squares2 '(1 2 3 4 5 6))
 ;; (sum-squares2 '(4 8 15 16 23 42))
 
-;; (swap-names '(2 4 8 5 0 4)) 
+;; (swap-names '(2 4 8 5 0 4))
 ;; (swap-names '(1 2 3 4 5 6))
 ;; (swap-names '(2 3 1 9))
 
