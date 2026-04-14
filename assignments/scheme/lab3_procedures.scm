@@ -108,25 +108,91 @@
 
 (gpa '(A B A A A))
 (gpa '(A C D F B C A B))
+(gpa '(A B A B))
+(gpa '(A C B A D F A))
 
-;; (clean-list '(1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
-;; (clean-list (list 1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
+(define clean-list
+  (lambda (lst)
+    (filter number? lst)))
 
-;; (sum-squares1 '(1 2 3 4 5 6))
-;; (sum-squares1 '(4 8 15 16 23 42))
+(clean-list '(1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
+(clean-list (list 1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
 
-;; (sum-squares2 '(1 2 3 4 5 6))
-;; (sum-squares2 '(4 8 15 16 23 42))
+(define sum-squares1
+  (lambda (lst)
+    (cond
+      ((null? lst) 0)
+      ((number? (car lst)) (+ (expt (car lst) 2) (sum-squares1 (cdr lst))))
+      (else (sum-squares1 (cdr lst))))))
 
-;; (swap-names '(2 4 8 5 0 4))
-;; (swap-names '(1 2 3 4 5 6))
-;; (swap-names '(2 3 1 9))
+(sum-squares1 '(1 2 3 4 5 6))
+(sum-squares1 '(4 8 15 16 23 42))
+(sum-squares1 '(1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
 
-;; (define shows '(
-;;                 (the_x_files . ("The X-Files" 1993 8.7))
-;;                 (gunsmoke . ("Gunsmoke" 1955 7.9))
-;;                 (the_brady_bunch . ("The Brady Bunch" 1969 6.5))
-;;                 (stranger_things . ("Stranger Things" 2016 8.8))))
-;; (find-show shows 'the_brady_bunch)
-;; (good-shows shows 7.9)
-;; (find-year shows 'stranger_things)
+
+(define sum-squares2
+  (lambda (lst)
+    (apply + (map sqr (clean-list lst)))))
+
+(sum-squares2 '(1 2 3 4 5 6))
+(sum-squares2 '(4 8 15 16 23 42))
+(sum-squares2 '(1 'two (/ 6 2) '(1 1) 5 "Six" 'seven (* 2 4) 9 (sqrt 100)))
+
+(define swap-names
+  (lambda (lst)
+    (map num-convert lst)))
+
+(define num-convert
+  (lambda (num)
+    (cond
+      ((= num 0) 'zero)
+      ((= num 1) 'one)
+      ((= num 2) 'two)
+      ((= num 3) 'three)
+      ((= num 4) 'four)
+      ((= num 5) 'five)
+      ((= num 6) 'six)
+      ((= num 7) 'seven)
+      ((= num 8) 'eight)
+      ((= num 9) 'nine))))
+
+(swap-names '(2 4 8 5 0 4))
+(swap-names '(1 2 3 4 5 6))
+(swap-names '(2 3 1 9))
+
+((lambda (a b)
+   (+ (* a a) b))
+ 3 7)
+
+(let
+  ((a 1)
+   (b 3)
+   (c 2))
+  (- (* b b) (* 4 a c)))
+
+(define find-show
+  (lambda (database name)
+    (cond
+      ((null? database) '())
+      ((eq? (caar database) name) (cdr (car database)))
+      (else (find-show (cdr database) name)))))
+
+(define find-year
+  (lambda (database name)
+    (cadr (find-show database name))))
+
+(define good-shows
+  (lambda (database rating)
+    (map car (filter (lambda (info)
+                       (<= rating (caddr (cdr info))))
+                     database))))
+
+(define shows '(
+                (the_x_files . ("The X-Files" 1993 8.7))
+                (gunsmoke . ("Gunsmoke" 1955 7.9))
+                (the_brady_bunch . ("The Brady Bunch" 1969 6.5))
+                (stranger_things . ("Stranger Things" 2016 8.8))))
+
+(find-show shows 'the_brady_bunch)
+(good-shows shows 7.9)
+(find-year shows 'stranger_things)

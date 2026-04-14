@@ -13,3 +13,9 @@ stock(sjm,'The J. M. Smucker Company', 119.81).
 % Rules
 price(Symbol, Price) :- stock(Symbol, _Name, Price).
 name(Symbol, Name) :- stock(Symbol, Name, _Price).
+
+stock(etp,X,Y).
+
+name(bab,X).
+
+price(etp, Price).
