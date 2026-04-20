@@ -47,7 +47,8 @@ show(mr_robot, 2015, 8.6).
 
 good_show(Show) :- show(Show, _, Rating), Rating >= 8.9.
 
-same_year(Show1, Show2) :- show(Show1, Year1, _), show(Show2, Year2, _), Year1 == Year2, Show1 \= Show2.
+%Equality Checking with Year
+same_year(Show1, Show2) :- show(Show1, Year, _), show(Show2, Year, _), Show1 \= Show2.
 
 quad(X, Y) :- Y is 4 * X.
 
