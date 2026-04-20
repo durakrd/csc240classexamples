@@ -14,8 +14,33 @@ stock(sjm,'The J. M. Smucker Company', 119.81).
 price(Symbol, Price) :- stock(Symbol, _Name, Price).
 name(Symbol, Name) :- stock(Symbol, Name, _Price).
 
-stock(etp,X,Y).
+% stock(etp,X,Y).
 
-name(bab,X).
+% name(bab,X).
 
-price(etp, Price).
+% price(etp, Price).
+
+%Introduction to Prolog Excercise
+add(A, B, C, D) :- D is A + B + C.
+
+animal(bear, mammal).
+animal(lizard, reptile).
+animal(horse, mammal).
+animal(squirrel, mammal).
+animal(alligator, reptile).
+animal(whale, mammal).
+
+% Pokemon, type
+pokemon(pikachu, electric).
+pokemon(charizard, flying).
+pokemon(charizard, fire).
+pokemon(garchomp, dragon).
+pokemon(garchomp, ground).
+
+% weak type, strong type
+weak(electric, ground).
+weak(flying, electric).
+
+weakness(X, Y) :- pokemon(X, Typex), pokemon(Y, Typey), weak(Typex, Typey).
+defeats(X, Y) :- pokemon(X, Typex), pokemon(Y, Typey), weak(Typey,Typex).
+
