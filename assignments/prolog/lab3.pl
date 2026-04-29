@@ -1,4 +1,4 @@
-:- autoload(library(lists), [member/2]).
+% :- autoload(library(lists), [member/2]).
 
 % Completely misread the question but still think this is pretty cool
 indexCheck(_, [], _) :- !, fail.
@@ -30,3 +30,35 @@ cadr([_, X | _], X).
 remove_them([], _, []) :- !.
 remove_them([H | T], Lst2, R) :- member(H, Lst2), !, remove_them(T, Lst2, R).
 remove_them([H | T], Lst2, [H | R]) :- remove_them(T, Lst2, R).
+
+distance([X1 | Y1], [X2 | Y2], D) :- D is ((X1 - X2)^2 + (Y1 - Y2)^2)^(1/2).
+
+clean_list([], []) :- !.
+clean_list([H | T], [H | R]) :- integer(H), !, clean_list(T, R).
+clean_list([_ | T], R) :- clean_list(T, R).
+
+squares([], []) :- !.
+squares([H | T], [H2 | R]) :- integer(H), !, H2 is H^2, squares(T, R).
+squares([_ | T], R) :- squares(T, R).
+
+sum_lst([], 0) :- !.
+sum_lst([H | T], Sum) :- sum_lst(T, TempSum), Sum is TempSum + H.
+
+sum_squares(Lst, Sum) :- squares(Lst, Return), sum_lst(Return, Sum).
+
+get_values([], []) :- !.
+get_values([[H | T] | T2], [Sum | Rtrn]) :- !, sum_lst([H | T], Sum),
+					    get_values(T2, Rtrn).
+get_values([H | T], [H | Rtrn]) :- get_values(T, Rtrn).
+
+scr_lst([0,1,2,3,4,5,6,7,8,9,10]).
+fbscore(TDwn, FldGl, Sfty, Extr, X) :- scr_lst(L),
+				       member(TDwn, L), member(Extr, L),
+  				       Extr =< TDwn, member(FldGl, L),
+				       member(Sfty, L),
+				       X is 6*TDwn + 3*FldGl + 2*Sfty + Extr.
+
+nomatch([], _, []) :- !.
+nomatch([H | T], [H | T2], Rtrn) :- !, nomatch(T, T2, Rtrn).
+nomatch([H | T], [_ | T2], [H | Rtrn]) :- !, nomatch(T, T2, Rtrn).
+nomatch(Lst, [], Lst).
