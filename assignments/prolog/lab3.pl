@@ -62,3 +62,9 @@ nomatch([], _, []) :- !.
 nomatch([H | T], [H | T2], Rtrn) :- !, nomatch(T, T2, Rtrn).
 nomatch([H | T], [_ | T2], [H | Rtrn]) :- !, nomatch(T, T2, Rtrn).
 nomatch(Lst, [], Lst).
+
+flattenit([], []) :- !.
+flattenit([[Hin | Tin] | T2], [Hin | Rtrn]) :- flattenit(Tin, Rtrnin),
+					       flattenit(T2, Rt2),
+					       append(Rtrnin, Rt2, Rtrn), !.
+flattenit([H | T], [H | Rtrn]) :- flattenit(T, Rtrn).
