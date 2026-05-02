@@ -18,3 +18,23 @@ split_after([], Idx, [], []) :- Idx \= 0, !.
 split_after([H | T], Idx, [H | T2], T3) :- Idx > 0, !, I is Idx - 1,
 					   split_after(T, I, T2, T3).
 split_after(T, 0, [], T).
+
+% partition removes duplicates
+partition(_, [], [], []) :- !.
+partition(P, [P | T], Small, Large) :- !, partition(P, T, Small, Large).
+partition(P, [H | T], [H | Small], Large) :- H < P, !, partition(P, T, Small, Large).
+partition(P, [H | T], Small, [H | Large]) :- partition(P, T, Small, Large).
+
+quicksort([], []) :- !.
+quicksort([P | T], Srt) :- partition(P, T, Left, Right),
+			   quicksort(Left, Lsrt),
+			   quicksort(Right, Rsrt),
+			   append(Lsrt, [P | Rsrt], Srt).
+
+flattenit([], []) :- !.
+flattenit([[Hin | Tin] | T2], [Hin | Rtrn]) :- flattenit(Tin, Rtrnin),
+					       flattenit(T2, Rt2),
+					       append(Rtrnin, Rt2, Rtrn), !.
+flattenit([H | T], [H | Rtrn]) :- flattenit(T, Rtrn).
+
+squish(Lst, Rtrn) :- flattenit(Lst, Flat), quicksort(Flat, Rtrn).
